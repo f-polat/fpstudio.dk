@@ -580,9 +580,11 @@ a.direct-value:hover { color: #FFFFFF; }
 
 /* ============ Mørk "video"-start: sløret skærm med en hjemmeside, der langsomt glider og zoomer ============ */
 .hero--dark { background: #1E1C1A; color: #FFFFFF; overflow: hidden; }
-.hero--dark > .wrap { z-index: 2; grid-template-columns: minmax(0, 1fr) !important; align-content: center; min-height: min(84svh, 780px); padding-block: clamp(56px, 9vw, 120px); }
+.hero--dark { --band-h: calc(clamp(2rem, 1rem + 4vw, 4.5rem) * 1.15 + 2 * clamp(18px, 3vw, 32px)); }
+/* Hero + branche-båndet fylder præcis første skærm, så båndet altid kan ses */
+.hero--dark > .wrap { z-index: 2; grid-template-columns: minmax(0, 1fr) !important; align-content: center; min-height: min(calc(100svh - var(--header-h) - var(--band-h) - 4px), 780px); padding-block: clamp(20px, 5svh, 96px); }
 .hero--dark .hero-text { max-width: 1040px; }
-.hero--dark .hero-h1 { color: #FFFFFF; font-size: clamp(2.5rem, 1rem + 5.4vw, 5.5rem); }
+.hero--dark .hero-h1 { color: #FFFFFF; font-size: min(clamp(2.5rem, 1rem + 5.4vw, 5.5rem), 11svh); }
 .hero--dark .swap > span { color: transparent; background: linear-gradient(90deg, #F6E3C3 0%, #E8B86A 50%, #D9956A 100%); -webkit-background-clip: text; background-clip: text; padding-bottom: .08em; }
 .hero--dark .swap > span::after { display: none; }
 .hero--dark .hero-lead { color: #D6CFC6; max-width: 44ch; }
