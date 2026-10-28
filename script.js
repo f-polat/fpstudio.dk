@@ -496,7 +496,7 @@ var PHONES = {
     });
   });
 
-  /* ---- Kontaktformular (sender intet – bygger en færdig besked) ---- */
+  /* ---- Kontaktformular: sendes via FormSubmit, med mailto som reserve ---- */
   var form = $('#kontaktformular'), summary = $('#form-errors'), ready = $('#besked-klar');
   var MSG = {
     navn: 'Skriv dit navn, så jeg ved, hvem jeg taler med.',
@@ -548,16 +548,35 @@ var PHONES = {
       'Navn: ' + navn + '\r\n' +
       'E-mail: ' + email + '\r\n' + 'Telefon: ' + (tlf || '–') + '\r\n\r\n' +
       'Venlig hilsen\r\n' + navn;
-    $('#msg-subject').textContent = subject;
-    $('#msg-body').value = body.replace(/\r\n/g, '\n');
-    $('#mailto-link').href = 'mailto:' + CONTACT.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    $('#copy-msg-status').textContent = '';
-    ready.hidden = false;
-    $('#ready-announce').textContent = 'Dit mailprogram åbnes med beskeden. Åbnede det ikke, kan du kopiere beskeden herunder.';
-    ready.focus({ preventScroll: true });
-    ready.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    // Åbn mailprogrammet via et rigtigt link-klik (boksen ovenfor står som reserve)
-    try { $('#mailto-link').click(); } catch (err) { /* reserve-boksen er allerede vist */ }
+    var btn = $('#submit-btn'), status = $('#form-status');
+    function showFallback() {
+      $('#msg-subject').textContent = subject;
+      $('#msg-body').value = body.replace(/\r\n/g, '\n');
+      $('#mailto-link').href = 'mailto:' + CONTACT.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      $('#copy-msg-status').textContent = '';
+      ready.hidden = false;
+      $('#ready-announce').textContent = 'Beskeden kunne ikke sendes automatisk. Dit mailprogram åbnes med beskeden, eller du kan kopiere den herunder.';
+      ready.focus({ preventScroll: true });
+      ready.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      try { $('#mailto-link').click(); } catch (err) { /* reserve-boksen er allerede vist */ }
+    }
+    btn.disabled = true; btn.textContent = 'Sender…'; status.textContent = 'Sender din besked…';
+    fetch('https://formsubmit.co/ajax/' + CONTACT.email, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ _subject: subject, _template: 'table', _replyto: email, Navn: navn, 'E-mail': email, Telefon: tlf || '–', Emne: topic, Besked: besked })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (!data || String(data.success) !== 'true') throw new Error('ikke sendt');
+      form.hidden = true;
+      var sent = $('#besked-sendt'); sent.hidden = false;
+      status.textContent = '';
+      $('#ready-announce').textContent = 'Tak – din besked er sendt.';
+      sent.focus({ preventScroll: true });
+      sent.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }).catch(function () {
+      status.textContent = '';
+      showFallback();
+    }).then(function () { btn.disabled = false; btn.textContent = 'Send besked'; });
   });
   $('#copy-to').addEventListener('click', function () {
     var btn = this, status = $('#copy-msg-status');
