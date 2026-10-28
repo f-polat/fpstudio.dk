@@ -2,7 +2,7 @@
    FP Studio – script.js
    ---------------------------------------------------------
    REDIGÉR HER: kontakt, projekter, tilvalg, fotos og hero-ord.
-   Prisen (Fra 2.500 kr.) står direkte i index.html.
+   Prisen (Fra 3.000 kr.) står direkte i index.html.
    HTML-filen indeholder en forhåndstegnet kopi af projekter, ord
    og vifte (så siden virker uden JavaScript). Når siden åbnes,
    tegnes de igen ud fra listerne herunder – så det er HER, du
