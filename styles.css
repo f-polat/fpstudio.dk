@@ -292,7 +292,7 @@ h2 .kicker { margin-bottom: 1rem; }
 .mk-browser { position: relative; z-index: 2; width: 80%; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-lift); background: #FFFFFF; transform: translateX(-6%); transition: transform 320ms var(--ease-out); }
 .mk-browser svg, .mk-phone svg { display: block; width: 100%; height: auto; filter: var(--mock-filter); }
 .mk-phone { position: absolute; z-index: 3; right: 5%; bottom: -5%; width: 24%; min-width: 64px; filter: drop-shadow(0 14px 18px rgb(43 41 38 / .3)); transition: transform 320ms var(--ease-out); }
-.p-card .sticker { position: absolute; z-index: 5; top: -12px; right: 14px; }
+.p-card .sticker { position: absolute; z-index: 5; top: -12px; right: 14px; background: #E8B86A; color: #2B2926; }
 .p-card--ink .sticker { background: #E8B86A; }
 .p-card h3 { margin-top: 26px; font-size: calc(var(--fs-h3) * 1.2); font-weight: 700; letter-spacing: -.025em; line-height: 1.1; }
 .p-cat { margin-top: 4px; font: 500 var(--fs-small)/1.3 var(--font-head); color: var(--text-muted); }
