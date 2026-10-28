@@ -352,32 +352,9 @@ var PHONES = {
   }
   $$('.photo img').forEach(watchPhoto);
 
-  /* ---- Tema ---- */
-  var STORE_KEY = 'fpstudio-theme';
-  var toggle = $('#theme-toggle');
-  var mqDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-  function currentTheme() {
-    var t = root.getAttribute('data-theme');
-    if (t === 'dark' || t === 'light') return t;
-    return mqDark && mqDark.matches ? 'dark' : 'light';
-  }
-  function syncToggle() {
-    var dark = currentTheme() === 'dark';
-    toggle.setAttribute('aria-label', dark ? 'Skift til lys tilstand' : 'Skift til mørk tilstand');
-    toggle.setAttribute('title', dark ? 'Lys' : 'Mørk');
-    if (root.hasAttribute('data-theme')) {
-      $$('meta[name="theme-color"]').forEach(function (m) { m.setAttribute('content', dark ? '#141B19' : '#EEEFE8'); m.removeAttribute('media'); });
-    }
-  }
-  try { var saved = localStorage.getItem(STORE_KEY); if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved); } catch (e) {}
-  syncToggle();
-  if (mqDark && mqDark.addEventListener) mqDark.addEventListener('change', syncToggle);
-  toggle.addEventListener('click', function () {
-    var next = currentTheme() === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem(STORE_KEY, next); } catch (e) {}
-    syncToggle();
-  });
+  /* ---- Tema: siden er altid mørk ---- */
+  root.setAttribute('data-theme', 'dark');
+  try { localStorage.removeItem('fpstudio-theme'); } catch (e) {}
 
   /* ---- Header: kant efter scroll ---- */
   var header = $('#site-header');
