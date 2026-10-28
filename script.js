@@ -98,14 +98,14 @@ function renderProjects() {
     var st = STATUS[p.status] || STATUS.dev;
     var mock = p.shot ? '<img class="mk-shot" src="' + esc(p.shot) + '" width="800" height="500" alt="' + esc(p.imageAlt) + '" loading="lazy" decoding="async">' : (MOCKUPS[p.image] ? MOCKUPS[p.image](p.imageAlt) : '');
     var phone = PHONES[p.image] ? PHONES[p.image]() : '';
-    var demo = p.demoUrl ? '<p class="p-live"><a class="text-link" href="' + esc(p.demoUrl) + '" target="_blank" rel="noopener">' + (p.status === 'live' ? 'Se siden live' : 'Se konceptet') + '<span class="sr-only"> (åbner i en ny fane)</span> ↗</a></p>' : '';
+    var demo = p.demoUrl ? '<p class="p-live"><a class="text-link" href="' + esc(p.demoUrl) + '" target="_blank" rel="noopener">' + (p.status === 'live' && !p.concept ? 'Se siden live' : 'Se konceptet') + '<span class="sr-only"> (åbner i en ny fane)</span> ↗</a></p>' : '';
     return '<li class="p-card p-card--' + esc(p.card || 'soft') + (p.wide ? ' p-card--wide' : '') + ' rv" style="--i:' + i + '" data-category="' + esc(p.category) + '" aria-labelledby="proj-' + esc(p.id) + '">' +
       '<figure class="project-media' + (p.shot ? ' project-media--shot' : '') + '">' +
         (p.photo ? '<div class="photo" aria-hidden="true">' + photoTag(p.photo, { alt: '', sizes: '(min-width: 768px) 45vw, 100vw', widths: [600, 1000] }) + '</div>' : '') +
         (p.demoUrl ? '<a class="mk-browser mk-link" href="' + esc(p.demoUrl) + '" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">' + mock + '</a>' : '<div class="mk-browser">' + mock + '</div>') +
         (phone ? '<div class="mk-phone" aria-hidden="true">' + phone + '</div>' : '') +
       '</figure>' +
-      '<p class="sticker sticker--status ' + st.cls + '" style="--r:' + (i % 2 ? '-5deg' : '6deg') + '">' + (p.concept ? 'Koncept · ' : '') + esc(st.label) + '</p>' +
+      '<p class="sticker sticker--status ' + st.cls + '" style="--r:' + (i % 2 ? '-5deg' : '6deg') + '">' + (p.concept ? 'Koncept' : esc(st.label)) + '</p>' +
       '<h3 id="proj-' + esc(p.id) + '">' + esc(p.title) + '</h3>' +
       '<p class="p-cat">' + esc(p.categoryLabel) + '</p>' + ((p.shot || p.wide) ? '<p class="p-idea">' + esc(p.idea) + '</p>' : '') + demo +
     '</li>';
