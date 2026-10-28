@@ -198,6 +198,8 @@ h2 .kicker { margin-bottom: 1rem; }
 .swap > span.is-on::after { transform: rotate(-1.2deg) scaleX(1); }
 .swap > span.is-on { clip-path: inset(0); }
 @media (max-width: 1023px) { .swap { display: grid; width: max-content; max-width: 100%; margin-top: .06em; } }
+/* Mobil: "Hjemmesider til" på første linje, så "til" ikke står alene */
+@media (max-width: 1023px) { .hero-h1 .ln { display: inline; } }
 .hero-lead { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-muted); max-width: 38ch; }
 .price-chip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .2em .45em; max-width: 100%; margin-top: 20px; padding: .55em .9em; background: var(--accent-soft); border-radius: var(--r-3); font: 500 var(--fs-label)/1.3 var(--font-head); color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .price-chip strong { font-weight: 700; color: var(--text); white-space: nowrap; }
